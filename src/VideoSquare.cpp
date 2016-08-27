@@ -51,7 +51,7 @@ void VideoSquare::updateSize() {
 	if(isCornerDragged) {
 		ofPoint p2(m.x, m.y);
 		ofRectangle r(prevPos, p2);
-		vidRect.scaleTo(r);
+		vidRect.scaleTo(r, OF_SCALEMODE_FILL);
 		vidRect.alignTo(prevPos, OF_ALIGN_HORZ_LEFT, OF_ALIGN_VERT_TOP);
 	} else {
 		prevPos = vidRect.getPosition();
