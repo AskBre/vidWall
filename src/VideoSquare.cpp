@@ -18,6 +18,10 @@ void VideoSquare::update() {
 		isCornerDragged = false;
 		isVidRectDragged = false;
 	}
+
+	if(isDoubleClicked) {
+		cout << "Click!" << endl;
+	}
 }
 
 void VideoSquare::draw() {
@@ -55,5 +59,24 @@ void VideoSquare::updateSize() {
 		vidRect.alignTo(prevPos, OF_ALIGN_HORZ_LEFT, OF_ALIGN_VERT_TOP);
 	} else {
 		prevPos = vidRect.getPosition();
+	}
+}
+
+void VideoSquare::mouseReleased(int x, int y, int button) {
+	cout << "LC " << lastClick << " t:" << ofGetElapsedTimeMillis() << endl;
+
+	if(ofGetElapsedTimeMillis() - lastClick < 500) {
+		ofFileDialogResult file = ofSystemLoadDialog();
+
+		if(file.bSuccess) {
+			cout << "Loaded file " << file.fileName << endl;
+			setSource(file.getPath());
+		} else {
+			cerr << "Can't load file " << file.fileName << endl;
+		}
+	}
+
+	if(vidRect.inside(ofVec2f(x, y))) {
+		lastClick = ofGetElapsedTimeMillis();
 	}
 }

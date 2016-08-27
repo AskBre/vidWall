@@ -9,6 +9,7 @@ class VideoSquare : public ofBaseApp {
 		void setup();
 		void update();
 		void draw();
+		void mouseReleased(int x, int y, int button);
 		void setSource(string s);
 
 	private:
@@ -23,5 +24,8 @@ class VideoSquare : public ofBaseApp {
 
 		bool isCornerDragged = false;
 		bool isVidRectDragged = false;
+		bool isDoubleClicked = false;
+		int lastClick = 0;
+
 		ofVec2f prevPos;
 };
