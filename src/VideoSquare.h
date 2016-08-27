@@ -15,21 +15,16 @@ class VideoSquare : public ofBaseApp {
 
 		void updatePos();
 		void updateSize();
-		void updateCornerRects();
+		void drawDragPoints();
 		void drawLayer();
 
-		bool isDragged(ofRectangle r);
-		bool isHover(ofRectangle r);
-
-		ofRectangle getVidRect();
-
-		float cornerSize = 0.1;
+		bool isDragged(ofRectangle &r);
+		bool isHover(ofRectangle &r);
 
 		ofVideoPlayer vid;
-		ofRectangle TLCorner;
-		ofRectangle TRCorner;
-		ofRectangle BLCorner;
-		ofRectangle BRCorner;
+		ofRectangle vidRect;
 
-		ofVec2f pos{(float)(ofGetWidth()*0.5), (float)(ofGetHeight()*0.5)};
+		bool isCornerDragged = false;
+		bool isVidRectDragged = false;
+		ofVec2f prevPos;
 };

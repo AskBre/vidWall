@@ -1,21 +1,27 @@
 #include "VideoSquare.h"
+//TODO Add graphics to middle and corner dragging
 
 void VideoSquare::setup() {
 	vid.load("ussr_testCard.mov");
+	vidRect.setFromCenter(ofGetWidth()*0.5, ofGetHeight()*0.5,
+				vid.getWidth(), vid.getHeight());
 	vid.play();
 }
 
 void VideoSquare::update() {
-	updatePos();
 	updateSize();
+	updatePos();
 
 	vid.update();
+
+	if(!ofGetMousePressed()) {
+		isCornerDragged = false;
+		isVidRectDragged = false;
+	}
 }
 
 void VideoSquare::draw() {
-	vid.draw(pos);
-
-	if(isHover(getVidRect())) drawLayer();
+	vid.draw(vidRect);
 }
 
 void VideoSquare::setSource(string source) {
@@ -25,56 +31,39 @@ void VideoSquare::setSource(string source) {
 //--------------------------------------------------------------
 void VideoSquare::updatePos() {
 	// TODO Move square with offset based on mousePos on drag start
-	if(isDragged(getVidRect())) {
-		ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
-		ofVec2f newPos(mouse.x - (vid.getWidth()*0.5),
-			mouse.y - (vid.getHeight()*0.5));
+	// TODO Stop if less than zero
+	ofRectangle r(vidRect);
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	r.scaleFromCenter(0.1);
 
-		pos = newPos;
-	}
+	if(r.inside(m) && ofGetMousePressed()) isVidRectDragged = true;
+
+	if(isVidRectDragged) vidRect.setFromCenter(m.x, m.y, vidRect.width, vidRect.height);
 }
 
 void VideoSquare::updateSize() {
-	if(!isHover(getVidRect())) return;
-	updateCornerRects();
-}
+	ofVec2f c(vidRect.getBottomRight());
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	int dist = ofDistSquared(c.x, c.y, m.x, m.y);
 
-void VideoSquare::updateCornerRects() {
-	ofRectangle r = getVidRect();
-	ofVec2f s(r.width * cornerSize, r.height * cornerSize);
+	if(dist<(vidRect.getWidth()*0.1) && ofGetMousePressed()) isCornerDragged = true;
 
-	TLCorner.set(r.getTopLeft(), s.x, s.y);
-	TRCorner.set(r.getTopRight(), -s.x, s.y);
-	BLCorner.set(r.getBottomLeft(), s.x, -s.y);
-	BRCorner.set(r.getBottomRight(), -s.x, -s.y);
-}
-
-void VideoSquare::drawLayer() {
-	ofPushStyle();
-		ofSetHexColor(0xFF0000);
-		ofNoFill();
-
-		ofDrawRectangle(getVidRect());
-		ofDrawRectangle(TLCorner);
-		ofDrawRectangle(TRCorner);
-		ofDrawRectangle(BLCorner);
-		ofDrawRectangle(BRCorner);
-	ofPopStyle();
+	if(isCornerDragged) {
+		ofPoint p2(m.x, m.y);
+		ofRectangle r(prevPos, p2);
+		vidRect.scaleTo(r);
+		vidRect.alignTo(prevPos, OF_ALIGN_HORZ_LEFT, OF_ALIGN_VERT_TOP);
+	} else {
+		prevPos = vidRect.getPosition();
+	}
 }
 
 //--------------------------------------------------------------
-bool VideoSquare::isDragged(ofRectangle r) {
-	//TODO Do the maths, not the obj.
+bool VideoSquare::isDragged(ofRectangle &r) {
 	if(!ofGetMousePressed()) return false;
-
 	return r.inside(ofVec2f(ofGetMouseX(), ofGetMouseY()));
 }
 
-bool VideoSquare::isHover(ofRectangle r) {
+bool VideoSquare::isHover(ofRectangle &r) {
 	return r.inside(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-}
-
-ofRectangle VideoSquare::getVidRect() {
-	ofRectangle r(pos, vid.getWidth(), vid.getHeight());
-	return r;
 }
