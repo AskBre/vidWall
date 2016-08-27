@@ -2,17 +2,17 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+	ofBackground(0);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+	vidSqr.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+	vidSqr.draw();
 }
 
 //--------------------------------------------------------------
@@ -66,6 +66,6 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
