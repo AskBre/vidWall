@@ -18,9 +18,6 @@ class VideoSquare : public ofBaseApp {
 		void drawDragPoints();
 		void drawLayer();
 
-		bool isDragged(ofRectangle &r);
-		bool isHover(ofRectangle &r);
-
 		ofVideoPlayer vid;
 		ofRectangle vidRect;
 

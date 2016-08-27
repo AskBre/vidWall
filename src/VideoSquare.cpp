@@ -57,13 +57,3 @@ void VideoSquare::updateSize() {
 		prevPos = vidRect.getPosition();
 	}
 }
-
-//--------------------------------------------------------------
-bool VideoSquare::isDragged(ofRectangle &r) {
-	if(!ofGetMousePressed()) return false;
-	return r.inside(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-}
-
-bool VideoSquare::isHover(ofRectangle &r) {
-	return r.inside(ofVec2f(ofGetMouseX(), ofGetMouseY()));
-}
