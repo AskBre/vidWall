@@ -7,7 +7,6 @@ void ofApp::setup() {
 	//TODO BUG If squares are ontop of each other, they move together
 
 	int nVidSqrs(4);
-
 	for(int i=0; i<nVidSqrs; i++) {
 		float offset((float)(i+1)/(float)nVidSqrs);
 //		float offset = 0.5;
@@ -16,6 +15,8 @@ void ofApp::setup() {
 		v.setup(p);
 		vidSqrs.push_back(v);
 	}
+
+	vidSqrs.back().setSource(CAM);
 }
 
 //--------------------------------------------------------------

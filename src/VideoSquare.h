@@ -2,16 +2,22 @@
 
 #include "ofMain.h"
 
+enum MODE{
+	CAM,
+	VIDEO
+};
+
 class VideoSquare : public ofBaseApp {
 	public:
-
 		void setup(ofVec2f pos);
 		void update();
 		void draw();
 		void mouseReleased(int x, int y, int button);
 		void setSource(string s);
+		void setSource(MODE m);
 
 	private:
+		void setupCam();
 
 		void updatePos();
 		void updateSize();
@@ -19,13 +25,17 @@ class VideoSquare : public ofBaseApp {
 		void drawLayer();
 
 		ofVideoPlayer vid;
+		ofVideoGrabber cam;
 		ofRectangle vidRect;
 
 		bool isHover = false;
 		bool isCornerDragged = false;
 		bool isVidRectDragged = false;
 		bool isDoubleClicked = false;
+
 		int lastClick = 0;
 
 		ofVec2f prevPos;
+
+		MODE mode = VIDEO;
 };

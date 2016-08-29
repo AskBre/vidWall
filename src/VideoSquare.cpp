@@ -1,7 +1,8 @@
 #include "VideoSquare.h"
-//TODO Add graphics to middle and corner dragging
+//TODO Add symbols to middle and corner dragging
 
 void VideoSquare::setup(ofVec2f pos) {
+	// TODO Change from movie to texture as default
 	vid.load("ussr_testCard.mov");
 	vidRect.setFromCenter(pos.x, pos.y, vid.getWidth()*0.25, vid.getHeight()*0.25);
 	vid.play();
@@ -11,7 +12,7 @@ void VideoSquare::update() {
 	updateSize();
 	updatePos();
 
-	vid.update();
+	(mode == VIDEO) ? vid.update() : cam.update();
 
 	if(!ofGetMousePressed()) {
 		isCornerDragged = false;
@@ -24,15 +25,34 @@ void VideoSquare::update() {
 }
 
 void VideoSquare::draw() {
-	vid.draw(vidRect);
+	(mode == VIDEO) ? vid.draw(vidRect) : cam.draw(vidRect);
 	drawLayer();
 }
 
 void VideoSquare::setSource(string source) {
+	mode = VIDEO;
 	vid.load(source);
+	vid.play();
+}
+
+void VideoSquare::setSource(MODE m) {
+	mode = m;
+
+	if(mode == CAM) {
+		vid.stop();
+		setupCam();
+	} else if (mode == VIDEO){
+		vid.play();
+	} else {
+		cerr << "Need MODE or string as argument" << endl;
+	}
 }
 
 //--------------------------------------------------------------
+void VideoSquare::setupCam() {
+	cam.initGrabber(480, 340);
+}
+
 void VideoSquare::updatePos() {
 	// TODO Move square with offset based on mousePos on drag start
 	// TODO Stop if less than zero
