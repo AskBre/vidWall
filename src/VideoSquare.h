@@ -4,9 +4,8 @@
 
 class VideoSquare : public ofBaseApp {
 	public:
-		VideoSquare() {setup();};
 
-		void setup();
+		void setup(ofVec2f pos);
 		void update();
 		void draw();
 		void mouseReleased(int x, int y, int button);

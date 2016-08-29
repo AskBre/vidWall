@@ -1,10 +1,9 @@
 #include "VideoSquare.h"
 //TODO Add graphics to middle and corner dragging
 
-void VideoSquare::setup() {
+void VideoSquare::setup(ofVec2f pos) {
 	vid.load("ussr_testCard.mov");
-	vidRect.setFromCenter(ofGetWidth()*0.5, ofGetHeight()*0.5,
-				vid.getWidth(), vid.getHeight());
+	vidRect.setFromCenter(pos.x, pos.y, vid.getWidth()*0.25, vid.getHeight()*0.25);
 	vid.play();
 }
 

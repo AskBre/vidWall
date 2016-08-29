@@ -1,18 +1,32 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 	ofBackground(0);
+
+	//TODO BUG If squares are ontop of each other, they move together
+
+	int nVidSqrs(4);
+
+	for(int i=0; i<nVidSqrs; i++) {
+		float offset((float)(i+1)/(float)nVidSqrs);
+		cout << "Offset is " << offset << endl;
+//		float offset = 0.5;
+		ofVec2f p(ofGetWidth()*offset, ofGetHeight()*0.5);
+		VideoSquare v;
+		v.setup(p);
+		vidSqrs.push_back(v);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	vidSqr.update();
+	for(auto &v : vidSqrs) v.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	vidSqr.draw();
+	for(auto &v : vidSqrs) v.draw();
 }
 
 //--------------------------------------------------------------
@@ -42,7 +56,7 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-	vidSqr.mouseReleased(x, y, button);
+	for(auto &v : vidSqrs) v.mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
