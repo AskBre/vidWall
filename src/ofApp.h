@@ -22,6 +22,4 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		vector<VideoSquare> vidSqrs;
-//		VideoSquare v;
-
 };
