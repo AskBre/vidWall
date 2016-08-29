@@ -10,7 +10,6 @@ void ofApp::setup() {
 
 	for(int i=0; i<nVidSqrs; i++) {
 		float offset((float)(i+1)/(float)nVidSqrs);
-		cout << "Offset is " << offset << endl;
 //		float offset = 0.5;
 		ofVec2f p(ofGetWidth()*offset, ofGetHeight()*0.5);
 		VideoSquare v;

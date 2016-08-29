@@ -25,6 +25,7 @@ void VideoSquare::update() {
 
 void VideoSquare::draw() {
 	vid.draw(vidRect);
+	drawLayer();
 }
 
 void VideoSquare::setSource(string source) {
@@ -49,7 +50,7 @@ void VideoSquare::updateSize() {
 	ofVec2f m(ofGetMouseX(), ofGetMouseY());
 	int dist = ofDistSquared(c.x, c.y, m.x, m.y);
 
-	if(dist<(vidRect.getWidth()*0.1) && ofGetMousePressed()) isCornerDragged = true;
+	if(dist<(vidRect.getWidth()) && ofGetMousePressed()) isCornerDragged = true;
 
 	if(isCornerDragged) {
 		ofPoint p2(m.x, m.y);
@@ -61,9 +62,31 @@ void VideoSquare::updateSize() {
 	}
 }
 
-void VideoSquare::mouseReleased(int x, int y, int button) {
-	cout << "LC " << lastClick << " t:" << ofGetElapsedTimeMillis() << endl;
+void VideoSquare::drawLayer() {
+	ofVec2f m(ofGetMouseX(), ofGetMouseY());
+	ofRectangle r(vidRect);
+	r.scale(1.1);
+	if(r.inside(m)) {
+		ofPushStyle();
+			ofNoFill();
+			ofSetLineWidth(2);
 
+			isVidRectDragged ? ofSetHexColor(0xFF0000) : ofSetHexColor(0xFFFFFF);
+			ofRectangle dragRect(vidRect);
+			ofRectangle resizeRect(vidRect);
+			dragRect.scaleFromCenter(0.1);
+			ofDrawRectangle(dragRect);
+
+			isCornerDragged ? ofSetHexColor(0xFF0000) : ofSetHexColor(0xFFFFFF);
+			resizeRect.scale(0.05);
+			ofVec2f s(resizeRect.getWidth(), resizeRect.getHeight());
+			resizeRect.setPosition(vidRect.getBottomRight()-s);
+			ofDrawRectangle(resizeRect);
+		ofPopStyle();
+	}
+}
+
+void VideoSquare::mouseReleased(int x, int y, int button) {
 	if(ofGetElapsedTimeMillis() - lastClick < 500) {
 		ofFileDialogResult file = ofSystemLoadDialog();
 

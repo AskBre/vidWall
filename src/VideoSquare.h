@@ -21,6 +21,7 @@ class VideoSquare : public ofBaseApp {
 		ofVideoPlayer vid;
 		ofRectangle vidRect;
 
+		bool isHover = false;
 		bool isCornerDragged = false;
 		bool isVidRectDragged = false;
 		bool isDoubleClicked = false;
