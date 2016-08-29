@@ -1,34 +1,50 @@
 #include "VideoSquare.h"
-//TODO Add symbols to middle and corner dragging
 
 void VideoSquare::setup(ofVec2f pos) {
-	// TODO Change from movie to texture as default
-	vid.load("ussr_testCard.mov");
-	vidRect.setFromCenter(pos.x, pos.y, vid.getWidth()*0.25, vid.getHeight()*0.25);
-	vid.play();
-
+	emptyImg.load("ussr_testCard.png");
 	moveIcn.load("move_icon.png");
 	resizeIcn.load("resize_icon.png");
+
+	vidRect.setFromCenter(pos.x, pos.y, emptyImg.getWidth()*0.25, emptyImg.getHeight()*0.25);
 }
 
 void VideoSquare::update() {
 	updateSize();
 	updatePos();
 
-	(mode == VIDEO) ? vid.update() : cam.update();
+	switch (mode) {
+		case EMPTY:
+			break;
+		case VIDEO:
+			vid.update();
+			break;
+		case CAM:
+			cam.update();
+		default:
+			break;
+	}
 
 	if(!ofGetMousePressed()) {
 		isCornerDragged = false;
 		isVidRectDragged = false;
 	}
-
-	if(isDoubleClicked) {
-		cout << "Click!" << endl;
-	}
 }
 
 void VideoSquare::draw() {
-	(mode == VIDEO) ? vid.draw(vidRect) : cam.draw(vidRect);
+	switch (mode) {
+		case EMPTY:
+			emptyImg.draw(vidRect);
+			break;
+		case VIDEO:
+			vid.draw(vidRect);
+			break;
+		case CAM:
+			cam.draw(vidRect);
+		default:
+//			emptyImg.draw(vidRect);
+			break;
+	}
+
 	drawLayer();
 }
 
@@ -45,9 +61,11 @@ void VideoSquare::setSource(MODE m) {
 		vid.stop();
 		setupCam();
 	} else if (mode == VIDEO){
-		vid.play();
+		cerr << "Set video-mode with string being filename" << endl;
+		mode = EMPTY;
 	} else {
 		cerr << "Need MODE or string as argument" << endl;
+		mode = EMPTY;
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 
 enum MODE{
+	EMPTY,
 	CAM,
 	VIDEO
 };
@@ -25,6 +26,7 @@ class VideoSquare : public ofBaseApp {
 		void drawLayer();
 
 		ofVideoPlayer vid;
+		ofImage emptyImg;
 		ofVideoGrabber cam;
 		ofRectangle vidRect;
 		ofImage moveIcn;
@@ -39,5 +41,5 @@ class VideoSquare : public ofBaseApp {
 
 		ofVec2f prevPos;
 
-		MODE mode = VIDEO;
+		MODE mode = EMPTY;
 };
