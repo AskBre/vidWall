@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofBackground(0);
-
+	ofSetDataPathRoot("../Resources/data");
 	//TODO BUG If squares are ontop of each other, they move together
 	int nVidSqrs(4);
 	for(int i=0; i<nVidSqrs; i++) {
