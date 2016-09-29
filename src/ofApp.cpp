@@ -26,22 +26,25 @@ void ofApp::draw(){
 }
 //--------------------------------------------------------------
 void ofApp::addScreen() {
-	ofVec2f p(ofGetWidth()*(vidSqrs.size()+1), ofGetHeight()*0.5);
+	ofVec2f p(ofRandom(0, ofGetWidth()),
+			ofRandom(0, ofGetHeight()));
 	VideoSquare v;
 	v.setup(p);
+	cout << "Adding screen" << endl;
 	vidSqrs.push_back(v);
 }
 
 void ofApp::removeScreen() {
+	cout << "Removing screen" << endl;
 	vidSqrs.pop_back();
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	switch(key) {
-		case 'OF_KEY_RIGHT':
+		case OF_KEY_RIGHT:
 			addScreen();
 			break;
-		case 'OF_KEY_LEFT':
+		case OF_KEY_LEFT:
 			removeScreen();
 			break;
 		default:
