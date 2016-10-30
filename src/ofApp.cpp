@@ -18,6 +18,12 @@ void ofApp::setup() {
 }
 
 void ofApp::update(){
+	if(vidSqrs.size() == 1) {
+		vidSqrs.at(0).setFullscreen(true);
+	} else {
+		vidSqrs.at(0).setFullscreen(false);
+	}
+
 	for(auto &v : vidSqrs) v.update();
 }
 

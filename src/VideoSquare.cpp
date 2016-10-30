@@ -77,16 +77,24 @@ void VideoSquare::setupCam() {
 void VideoSquare::updatePos() {
 	// TODO Move square with offset based on mousePos on drag start
 	// TODO Stop if less than zero
-	ofRectangle r(vidRect);
-	ofVec2f m(ofGetMouseX(), ofGetMouseY());
-	r.scaleFromCenter(0.1);
+	if(!isFullscreen) {
+		ofRectangle r(vidRect);
+		ofVec2f m(ofGetMouseX(), ofGetMouseY());
+		r.scaleFromCenter(0.1);
 
-	if(r.inside(m) && ofGetMousePressed()) isVidRectDragged = true;
+		if(r.inside(m) && ofGetMousePressed()) isVidRectDragged = true;
 
-	if(isVidRectDragged) vidRect.setFromCenter(m.x, m.y, vidRect.width, vidRect.height);
+		if(isVidRectDragged) vidRect.setFromCenter(m.x, m.y, vidRect.width, vidRect.height);
+	}
 }
 
 void VideoSquare::updateSize() {
+	if(isFullscreen) {
+		ofRectangle r(0, 0, ofGetWidth(), ofGetHeight());
+		vidRect.scaleTo(r, OF_SCALEMODE_FIT);
+		return;
+	}
+
 	ofVec2f c(vidRect.getBottomRight());
 	ofVec2f m(ofGetMouseX(), ofGetMouseY());
 	int dist = ofDistSquared(c.x, c.y, m.x, m.y);

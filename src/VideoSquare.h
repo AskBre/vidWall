@@ -16,6 +16,7 @@ class VideoSquare : public ofBaseApp {
 		void mouseReleased(int x, int y, int button);
 		void setSource(string s);
 		void setSource(MODE m);
+		void setFullscreen(bool _isFullscreen) {isFullscreen = _isFullscreen;};
 
 	private:
 		void setupCam();
@@ -31,6 +32,8 @@ class VideoSquare : public ofBaseApp {
 		ofRectangle vidRect;
 		ofImage moveIcn;
 		ofImage resizeIcn;
+
+		bool isFullscreen = false;
 
 		bool isHover = false;
 		bool isCornerDragged = false;
