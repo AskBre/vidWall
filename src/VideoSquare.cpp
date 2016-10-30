@@ -45,7 +45,7 @@ void VideoSquare::draw() {
 			break;
 	}
 
-	drawLayer();
+	if(!isFullscreen) drawLayer();
 }
 
 void VideoSquare::setSource(string source) {
