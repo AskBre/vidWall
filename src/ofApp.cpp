@@ -35,8 +35,10 @@ void ofApp::addScreen() {
 }
 
 void ofApp::removeScreen() {
-	cout << "Removing screen" << endl;
-	vidSqrs.pop_back();
+	if(vidSqrs.size()>1) {
+		cout << "Removing screen" << endl;
+		vidSqrs.pop_back();
+	}
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
