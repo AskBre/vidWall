@@ -49,9 +49,16 @@ void VideoSquare::draw() {
 }
 
 void VideoSquare::setSource(string source) {
-	mode = VIDEO;
-	vid.load(source);
-	vid.play();
+	if(source == "CAM") {
+		mode = CAM;
+		return;
+	} else if (source == "EMPTY") {
+		mode = EMPTY;
+	} else {
+		mode = VIDEO;
+		vid.load(source);
+		vid.play();
+	}
 }
 
 void VideoSquare::setSource(MODE m) {

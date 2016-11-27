@@ -15,6 +15,8 @@ void ofApp::setup() {
 	}
 
 	vidSqrs.back().setSource(CAM);
+
+	load();
 }
 
 void ofApp::update(){
@@ -75,6 +77,7 @@ void ofApp::save() {
 	}
 	settings.popTag();
 	settings.saveFile("settings.xml");
+	settings.saveFile("../../../../vidWall_settings.xml");
 	cout << "Settings are saved" << endl;
 }
 
