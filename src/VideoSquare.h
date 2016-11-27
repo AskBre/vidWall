@@ -14,9 +14,21 @@ class VideoSquare : public ofBaseApp {
 		void update();
 		void draw();
 		void mouseReleased(int x, int y, int button);
+
 		void setSource(string s);
 		void setSource(MODE m);
+		string getSource();
+
 		void setFullscreen(bool _isFullscreen) {isFullscreen = _isFullscreen;};
+
+		ofPoint getPos() {return vidRect.getPosition();};
+		void setPos(ofPoint p) {vidRect.setPosition(p);};
+
+		float getWidth() {return vidRect.getWidth();};
+		void setWidth(float w) {vidRect.setWidth(w);};
+		float getHeight() {return vidRect.getHeight();};
+		void setHeight(float h) {vidRect.setHeight(h);};
+
 
 	private:
 		void setupCam();

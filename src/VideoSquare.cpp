@@ -69,6 +69,20 @@ void VideoSquare::setSource(MODE m) {
 	}
 }
 
+string VideoSquare::getSource() {
+	switch (mode) {
+		case VIDEO:
+			return vid.getMoviePath();
+			break;
+		case CAM:
+			return "CAM";
+			break;
+		default:
+			return "EMPTY";
+			break;
+	}
+}
+
 //--------------------------------------------------------------
 void VideoSquare::setupCam() {
 	cam.initGrabber(480, 340);

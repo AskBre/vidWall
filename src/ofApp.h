@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "VideoSquare.h"
+#include "ofxXmlSettings.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -11,6 +12,9 @@ class ofApp : public ofBaseApp{
 
 		void addScreen();
 		void removeScreen();
+
+		void save();
+		void load();
 
 		void keyPressed(int key);
 		void keyReleased(int key);

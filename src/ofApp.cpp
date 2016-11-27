@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofBackground(0);
-//	ofSetDataPathRoot("../Resources/data");
+	ofSetDataPathRoot("../Resources/data");
 	//TODO BUG If squares are ontop of each other, they move together
 	int nVidSqrs(4);
 	for(int i=0; i<nVidSqrs; i++) {
@@ -46,6 +46,72 @@ void ofApp::removeScreen() {
 		vidSqrs.pop_back();
 	}
 }
+
+//--------------------------------------------------------------
+void ofApp::save() {
+	ofxXmlSettings settings;
+	settings.addTag("vidSqrs");
+	settings.pushTag("vidSqrs");
+
+	for(unsigned i=0; i<vidSqrs.size(); i++) {
+		settings.addTag("vidSqr");
+		settings.pushTag("vidSqr", i);
+
+		settings.addValue("source", vidSqrs.at(i).getSource());
+
+		settings.addTag("pos");
+		settings.pushTag("pos");
+		settings.addValue("x", vidSqrs.at(i).getPos().x);
+		settings.addValue("y", vidSqrs.at(i).getPos().y);
+		settings.popTag();
+
+		settings.addTag("size");
+		settings.pushTag("size");
+		settings.addValue("width", vidSqrs.at(i).getWidth());
+		settings.addValue("height", vidSqrs.at(i).getHeight());
+		settings.popTag();
+
+		settings.popTag();
+	}
+	settings.popTag();
+	settings.saveFile("settings.xml");
+	cout << "Settings are saved" << endl;
+}
+
+void ofApp::load() {
+	ofxXmlSettings settings;
+	if(!settings.loadFile("settings.xml")) {
+		cerr << "No settings-file found" << endl;
+		return;
+	}
+	settings.pushTag("vidSqrs");
+	vidSqrs.resize(settings.getNumTags("vidSqr"));
+	cout << "Found " << vidSqrs.size() << " numtags" << endl;
+
+	for(unsigned i=0; i<vidSqrs.size(); i++) {
+		settings.pushTag("vidSqr", i);
+
+		string source = settings.getValue("source", "EMPTY");
+		vidSqrs.at(i).setSource(source);
+
+		settings.pushTag("pos");
+			ofPoint p;
+			p.x = settings.getValue("x", 0);
+			p.y = settings.getValue("y", 0);
+			vidSqrs.at(i).setPos(p);
+		settings.popTag();
+
+		settings.pushTag("size");
+			vidSqrs.at(i).setWidth(settings.getValue("width", 0));
+			vidSqrs.at(i).setHeight(settings.getValue("height", 0));
+		settings.popTag();
+
+		settings.popTag();
+	}
+	settings.popTag();
+	cout << "Settings are loaded" << endl;
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	switch(key) {
@@ -54,6 +120,12 @@ void ofApp::keyPressed(int key){
 			break;
 		case OF_KEY_LEFT:
 			removeScreen();
+			break;
+		case 's':
+			save();
+			break;
+		case 'l':
+			load();
 			break;
 		default:
 			break;
